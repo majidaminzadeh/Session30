@@ -22,15 +22,17 @@ public class RestServiceTest {
     }
 
     @GetMapping("/account")
-    public Account getById(@RequestParam(value = "id", required = false) Long id){
-        Optional<Account> account = accountService.getAllAccounts().stream().filter(t -> t.getId().equals(id)).findFirst();
-        return account.orElse(new Account());
+    public Account getByCode(@RequestParam(value = "code", required = false) String code){
+//        Optional<Account> account = accountService.getAllAccounts().stream().filter(t -> t.getCode() != null && t.getCode().equals(code)).findFirst();
+//        return account.orElse(new Account());
+        return accountService.getAccountByCode(code);
     }
 
     @GetMapping("/account/{id}")
     public Account getPathById(@PathVariable("id") Long id){
-        Optional<Account> account = accountService.getAllAccounts().stream().filter(t -> t.getId().equals(id)).findFirst();
-        return account.orElse(new Account());
+//        Optional<Account> account = accountService.getAllAccounts().stream().filter(t -> t.getId().equals(id)).findFirst();
+        Account account = accountService.getAccountById(id);
+        return account;
     }
 
     @PostMapping("/account")
@@ -39,4 +41,22 @@ public class RestServiceTest {
         return account;
     }
 
+    @GetMapping("/account/title/{title}")
+    public List<Account> getByTitle(@PathVariable("title") String title){
+//        account.setId(90l);
+//        return account;
+        return accountService.getAccountByTitle(title);
+    }
+
+    @GetMapping("/account/code/{code}/title/{title}")
+    public List<Account> getByTitle(@PathVariable("code") String code, @PathVariable("title") String title){
+//        account.setId(90l);
+//        return account;
+        return accountService.getAccountByCodeAndTitle(code, title);
+    }
+
+    @PostMapping("/account/create")
+    public Account create(@RequestBody Account account){
+        return accountService.save(account);
+    }
 }

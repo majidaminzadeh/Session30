@@ -3,15 +3,13 @@ package com.tosan.session30.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Data
 @NoArgsConstructor
+@Table(name = "account2")
 public class Account {
 
     @Id
