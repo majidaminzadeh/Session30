@@ -16,8 +16,8 @@ public class AccountService {
     @Autowired
     private AccountRepository repository;
 
-    @Autowired
-    private AccountService accountService;
+//    @Autowired
+//    private AccountService accountService;
 
     public List<Account> getAllAccounts(){
         List<Account> accounts = repository.findAll();

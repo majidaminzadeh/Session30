@@ -2,6 +2,8 @@ package com.tosan.session30.controller;
 
 import com.tosan.session30.model.Account;
 import com.tosan.session30.service.AccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +15,18 @@ import java.util.Optional;
 @RequestMapping(value = "/test")
 public class RestServiceTest {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(RestServiceTest.class);
+
     @Autowired
     private AccountService accountService;
 
     @GetMapping("/all")
     public List<Account> getAll(){
+        LOGGER.error("ERROR");
+        LOGGER.warn("WARN");
+        LOGGER.info("INFO");
+        LOGGER.debug("DEBUG");
+        LOGGER.trace("TRACE");
         return accountService.getAllAccounts();
     }
 
@@ -57,6 +66,12 @@ public class RestServiceTest {
 
     @PostMapping("/account/create")
     public Account create(@RequestBody Account account){
-        return accountService.save(account);
+        try {
+            account = accountService.save(account);
+        } catch (RuntimeException ex) {
+            LOGGER.error("Exception occured: {}", ex);
+//            throw ex;
+        }
+        return account;
     }
 }
